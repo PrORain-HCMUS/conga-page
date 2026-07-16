@@ -224,7 +224,7 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="static/images/conga-overview.png" alt="CONGA pipeline: user interaction history feeds a modernized encoder (RoPE, KromHC, SwiGLU) and a TITANS neural memory; their outputs are fused for next-item prediction." style="width:100%; height:auto;">
+      <img src="static/images/conga-overview.png" alt="CONGA two-phase training: Phase 1 trains the modernized encoder (RoPE, KromHC, SwiGLU); Phase 2 freezes the encoder and trains the TITANS neural memory on extended history, fusing both outputs for next-item prediction." style="width:100%; height:auto;">
       <h2 class="subtitle has-text-centered">
         CONGA layers three contributions on a modernized SASRec backbone &mdash; <b>RoPE</b> for norm-preserving positional encoding, <b>KromHC</b> multi-stream fusion with data-adaptive stream selection, and a <b>TITANS</b> two-phase neural memory &mdash; achieving up to <b>+18.7% HR@5</b> over the strongest baseline on ML-1M.
       </h2>
