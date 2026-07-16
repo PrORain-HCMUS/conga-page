@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation">
+  <meta name="description" content="CONGA combines RoPE, KromHC multi-stream fusion, and TITANS neural memory for long-history sequential recommendation. Accepted at ACM RecSys 2026.">
+  <meta name="keywords" content="sequential recommendation, neural memory, rotary positional embeddings, KromHC, TITANS, catastrophic forgetting, CUDA, recommender systems, ACM RecSys">
+  <meta name="author" content="Hoang-Vu Le, Tuong-Bach-Hy Nguyen, Bac Le">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="University of Science, VNU-HCM">
+  <meta property="og:title" content="CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation">
+  <meta property="og:description" content="CONGA combines RoPE, KromHC multi-stream fusion, and TITANS neural memory for long-history sequential recommendation. Accepted at ACM RecSys 2026.">
+  <meta property="og:url" content="https://nguyentuongbachhy.github.io/conga-page/">
+  <meta property="og:image" content="https://nguyentuongbachhy.github.io/conga-page/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CONGA architecture overview">
+  <meta property="article:author" content="Hoang-Vu Le">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="sequential recommendation">
+  <meta property="article:tag" content="neural memory">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation">
+  <meta name="twitter:description" content="RoPE + KromHC multi-stream fusion + TITANS neural memory for long-history sequential recommendation. Accepted at ACM RecSys 2026.">
+  <meta name="twitter:image" content="https://nguyentuongbachhy.github.io/conga-page/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="CONGA architecture overview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation">
+  <meta name="citation_author" content="Le, Hoang-Vu">
+  <meta name="citation_author" content="Nguyen, Tuong-Bach-Hy">
+  <meta name="citation_author" content="Le, Bac">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ACM Conference on Recommender Systems (RecSys '26)">
+  <meta name="citation_pdf_url" content="https://nguyentuongbachhy.github.io/conga-page/static/pdfs/CONGA-RecSys.pdf">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation</title>
+
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation",
+    "description": "CONGA combines RoPE, KromHC multi-stream fusion, and TITANS neural memory for long-history sequential recommendation.",
+    "author": [
+      { "@type": "Person", "name": "Hoang-Vu Le", "affiliation": { "@type": "Organization", "name": "University of Science, VNU-HCM" } },
+      { "@type": "Person", "name": "Tuong-Bach-Hy Nguyen", "affiliation": { "@type": "Organization", "name": "University of Science, VNU-HCM" } },
+      { "@type": "Person", "name": "Bac Le", "affiliation": { "@type": "Organization", "name": "University of Science, VNU-HCM" } }
+    ],
+    "datePublished": "2026-09-28",
+    "publisher": { "@type": "Organization", "name": "ACM Conference on Recommender Systems (RecSys '26)" },
+    "url": "https://nguyentuongbachhy.github.io/conga-page/",
+    "image": "https://nguyentuongbachhy.github.io/conga-page/static/images/social_preview.png",
+    "keywords": ["sequential recommendation", "neural memory", "rotary positional embeddings", "KromHC", "TITANS"],
+    "isAccessibleForFree": true,
+    "mainEntity": { "@type": "WebPage", "@id": "https://nguyentuongbachhy.github.io/conga-page/" },
+    "about": [
+      { "@type": "Thing", "name": "Sequential Recommendation" },
+      { "@type": "Thing", "name": "Neural Associative Memory" }
+    ]
+  }
+  </script>
+
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "University of Science, VNU-HCM - Faculty of Information Technology",
+    "url": "https://fit.hcmus.edu.vn",
+    "logo": "https://nguyentuongbachhy.github.io/conga-page/static/images/favicon.ico",
+    "sameAs": [
+      "https://github.com/nguyentuongbachhy/CONGA"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Hoang-Vu Le,</span>
+              <span class="author-block">Tuong-Bach-Hy Nguyen,</span>
+              <span class="author-block">Bac Le</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of Science, VNU-HCM &middot; Faculty of Information Technology<br>ACM Conference on Recommender Systems (RecSys '26), Sept 28&ndash;Oct 2 2026, Minneapolis, MN, USA</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/CONGA-RecSys.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://github.com/nguyentuongbachhy/CONGA" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser image -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/architecture.png" alt="CONGA architecture overview: RoPE, KromHC multi-stream fusion, and TITANS two-phase memory on a modernized SASRec backbone." style="width:100%; height:auto;">
+      <h2 class="subtitle has-text-centered">
+        CONGA layers three contributions on a modernized SASRec backbone &mdash; <b>RoPE</b> for norm-preserving positional encoding, <b>KromHC</b> multi-stream fusion with data-adaptive stream selection, and a <b>TITANS</b> two-phase neural memory &mdash; achieving up to <b>+18.7% HR@5</b> over the strongest baseline on ML-1M.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser image -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing sequential recommendation models rely on absolute positional encodings and fixed context windows, producing two structural failure modes: <b>out-of-distribution degradation</b> on histories longer than the training window, and <b>hard context limits</b> that discard long-range interactions. We present <b>CONGA</b> (<b>CO</b>ntinual <b>N</b>eural <b>G</b>ated <b>A</b>rchitecture), which addresses these limitations through three contributions: (1) <b>Rotary Positional Embeddings (RoPE)</b> with a norm-preserving property for any sequence length, accelerated by custom CUDA kernels; (2) <b>KromHC multi-stream fusion</b> with exact doubly-stochastic mixing via Kronecker-product parametrization &mdash; where ablation confirms the expressivity gain arises from balanced gradient flow rather than additional parameters &mdash; together with a data-adaptive stream selection mechanism that prevents overfitting on sparse corpora; and (3) <b>TITANS neural associative memory</b> adapted to discrete-item recommendation, the first such proof-of-concept, via a two-phase training protocol with a structural forgetting-prevention property: the base encoder is frozen, preserving its short-sequence predictions, while Phase 2 only adds a learned memory term. Evaluated under a rigorous <b>full-ranking</b> protocol across four benchmarks (ML-1M, Beauty, Yelp, Steam), CONGA achieves state-of-the-art performance on long-history benchmarks, with gains up to <b>+18.7% HR@5</b> on ML-1M &mdash; the densest, longest-history dataset where all three failure modes are simultaneously active &mdash; and consistent improvements on long-history benchmarks, with competitive results on short-history datasets where the RoPE backbone is the primary driver.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Motivation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            SASRec-family models learn <b>absolute position embeddings</b> independently for each index, so any sequence exceeding the training window exposes out-of-distribution positions at test time &mdash; a structural defect on datasets like ML-1M, where histories reach 300&ndash;600 interactions. Standard attention also scales as <i>O(L&sup2;)</i> in sequence length, restricting practical context windows to 200&ndash;300 items and forcing a single residual stream to simultaneously capture short-term recency and long-term preference.
+          </p>
+        </div>
+        <img src="static/images/failure-modes.png" alt="Two structural failure modes: positional out-of-distribution degradation and hard context window limits" style="width:100%; height:auto;">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End motivation -->
+
+<!-- Method -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>C1 &mdash; RoPE.</b> Replacing absolute positional embeddings with Rotary Positional Embeddings gives a norm-preserving property (&Vert;&#8475;<sub>m</sub>&Vert;<sub>F</sub> = &radic;d for any sequence length), directly resolving the positional OOD failure mode. A fused CUDA kernel accelerates it 5.0&times; (forward) / 5.4&times; (backward) over the eager PyTorch implementation.
+          </p>
+          <p>
+            <b>C2 &mdash; KromHC multi-stream fusion.</b> Instead of a single residual stream, KromHC (implemented as <code>MHCv2</code>) mixes multiple parallel streams through an exact doubly-stochastic matrix built from a Kronecker product of 2&times;2 mixing blocks &mdash; guaranteeing the mixing never collapses to a degenerate projection. A data-adaptive rule sets the stream count from sequence density (more streams on dense/long-history corpora, fewer on sparse ones), preventing overfitting on short sequences.
+          </p>
+          <p>
+            <b>C3 &mdash; TITANS two-phase memory.</b> A neural associative memory extends the effective context window (e.g. 300 &rarr; 600 items). Phase 1 trains the base encoder; Phase 2 <b>freezes</b> the base encoder and trains only the memory module &mdash; a structural guarantee that short-sequence predictions are preserved while long-range retrieval is added on top.
+          </p>
+        </div>
+        <div id="method-carousel" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/fig-pipeline.png" alt="CONGA training pipeline overview" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">End-to-end pipeline: modernized SASRec backbone with RoPE, KromHC, and SwiGLU, followed by two-phase TITANS training.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/fig-conga-block.png" alt="CONGA transformer block with KromHC multi-stream fusion" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">A single CONGA block: KromHC multi-stream fusion wraps the attention and feed-forward sublayers.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/fig-titans.png" alt="TITANS two-phase memory training protocol" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">TITANS two-phase protocol: base encoder frozen in Phase 2, memory module trained on extended sequences.</h2>
+          </div>
+          <div class="item">
+            <img src="static/images/birkhoff-geometry.png" alt="Birkhoff polytope geometry of the KromHC doubly-stochastic mixing matrix" loading="lazy"/>
+            <h2 class="subtitle has-text-centered">KromHC's Kronecker-product mixing matrix is an exact vertex of the Birkhoff polytope of doubly-stochastic matrices.</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method -->
+
+<!-- Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content">
+          <p>Evaluated under full-ranking (no negative sampling) against nine baselines (Caser, GRU4Rec, SASRec, BERT4Rec, FMLPRec, DuoRec, FEARec, BSARec, WEARec), CONGA ranks first on 14 of 16 accuracy metrics. Gains scale with interaction density and history length:</p>
+
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Dataset</th>
+                  <th>Regime</th>
+                  <th>Best baseline (NDCG@10)</th>
+                  <th>CONGA (NDCG@10)</th>
+                  <th>&Delta; Improvement</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><b>ML-1M</b></td><td>dense, long-history (avg. len. 165.6)</td><td>0.1694 (WEARec)</td><td><b>0.2012</b></td><td><b>+18.77%</b></td></tr>
+                <tr><td><b>Yelp</b></td><td>sparse, short-history (avg. len. 10.4)</td><td>0.0412 (WEARec)</td><td><b>0.0467</b></td><td><b>+13.35%</b></td></tr>
+                <tr><td><b>Steam</b></td><td>sparse (avg. len. 14.2)</td><td>0.0646 (DuoRec)</td><td><b>0.0672</b></td><td><b>+4.02%</b></td></tr>
+                <tr><td><b>Beauty</b></td><td>sparse, very short (avg. len. 8.9)</td><td>0.0601 (FEARec)</td><td>0.0594</td><td>-1.16%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="columns">
+            <div class="column">
+              <img src="static/images/length-comparison.png" alt="Performance comparison across sequence lengths" loading="lazy"/>
+            </div>
+            <div class="column">
+              <img src="static/images/model-comparison.png" alt="Performance comparison across baseline models" loading="lazy"/>
+            </div>
+          </div>
+
+          <h3 class="title is-4">CUDA Kernels</h3>
+          <p>Four components are accelerated with custom fused CUDA kernels (measured at B=128, L=300, float32, RTX 5090):</p>
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-fullwidth">
+              <thead>
+                <tr><th>Kernel</th><th>Forward speedup</th><th>Backward speedup</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>RoPE</td><td><b>5.0&times;</b></td><td><b>5.4&times;</b></td></tr>
+                <tr><td>SwiGLU</td><td><b>3.9&times;</b></td><td><b>3.5&times;</b></td></tr>
+                <tr><td>KromHC (MHCv2)</td><td><b>5.2&times;</b></td><td><b>4.8&times;</b></td></tr>
+                <tr><td>TITANS</td><td><b>13.2&times;</b></td><td><b>15.0&times;</b></td></tr>
+                <tr><td><b>Combined</b></td><td><b>10.0&times;</b></td><td><b>10.9&times;</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="title is-4">Ablation Study</h3>
+          <p>Each row adds one component to the previous. A0 is a modernized SASRec encoder with RoPE only, isolating the incremental contribution of KromHC, SwiGLU, and TITANS:</p>
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-fullwidth">
+              <thead>
+                <tr><th>ID</th><th>Configuration</th><th>ML-1M HR@5</th><th>ML-1M NDCG@10</th><th>Yelp HR@5</th><th>Yelp NDCG@10</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>A0</td><td>Base encoder (RoPE only)</td><td>0.2434</td><td>0.1984</td><td><b>0.0554</b></td><td><b>0.0365</b></td></tr>
+                <tr><td>A1</td><td>A0 + KromHC</td><td>0.2425</td><td>0.1988</td><td>0.0524</td><td>0.0433</td></tr>
+                <tr><td>A2</td><td>A1 + SwiGLU</td><td>0.2432</td><td>0.2007</td><td>0.0534</td><td>0.0444</td></tr>
+                <tr><td>A3</td><td>A2 + TITANS (full CONGA)</td><td><b>0.2435</b></td><td><b>0.2012</b></td><td>0.0551</td><td>0.0467</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End results -->
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{le2026conga,
+  title     = {CONGA: Continual Neural Gated Architecture for Long-History Sequential Recommendation},
+  author    = {Le, Hoang-Vu and Nguyen, Tuong-Bach-Hy and Le, Bac},
+  booktitle = {Proceedings of the ACM Conference on Recommender Systems (RecSys '26)},
+  year      = {2026},
+  address   = {Minneapolis, MN, USA},
+  publisher = {ACM}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Code available at <a href="https://github.com/nguyentuongbachhy/CONGA" target="_blank">github.com/nguyentuongbachhy/CONGA</a> (MIT License).
+          </p>
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </main>
+
+  </body>
+  </html>
