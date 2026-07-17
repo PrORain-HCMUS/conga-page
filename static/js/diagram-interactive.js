@@ -59,6 +59,7 @@
 
   var pop = document.createElement("div");
   pop.id = "diagram-popup";
+  pop.className = "diagram-popup-shared";
   pop.setAttribute("role", "tooltip");
   document.body.appendChild(pop);
 

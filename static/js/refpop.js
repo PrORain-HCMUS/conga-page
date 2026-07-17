@@ -124,6 +124,7 @@
         for (var el = node.parentElement; el; el = el.parentElement) {
           if (SKIP_TAGS[el.tagName] || el.id === "ref-popup" ||
               el.id === "conga-diagram-mount" || el.id === "fm-diagram-mount" ||
+              el.id === "method-arch-mount" || el.id === "method-kromhc-mount" || el.id === "method-titans-mount" ||
               (el.classList && el.classList.contains("ref-term"))) {
             return NodeFilter.FILTER_REJECT;
           }
