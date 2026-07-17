@@ -123,7 +123,7 @@
         if (!node.nodeValue || !PATTERN.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
         for (var el = node.parentElement; el; el = el.parentElement) {
           if (SKIP_TAGS[el.tagName] || el.id === "ref-popup" ||
-              el.id === "conga-diagram-mount" ||
+              el.id === "conga-diagram-mount" || el.id === "fm-diagram-mount" ||
               (el.classList && el.classList.contains("ref-term"))) {
             return NodeFilter.FILTER_REJECT;
           }
