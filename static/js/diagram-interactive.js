@@ -38,6 +38,22 @@
     "RtOVfWdjJctBaVSm0xQz-120": {
       title: "Top-K recommendations",
       body: "Final ranked list after memory fusion — this is what benefits most on long-history users (+0.72% NDCG@10 for >150-item histories)."
+    },
+    "RtOVfWdjJctBaVSm0xQz-87": {
+      title: "h[L] — attention output",
+      body: "The Phase-1 encoder's final-position hidden state. In Phase 1 this feeds the scoring head directly — there is no memory term yet."
+    },
+    "RtOVfWdjJctBaVSm0xQz-111": {
+      title: "h[L] — frozen attention output",
+      body: "h_attn[L], produced by the now-frozen encoder. Identical to its Phase-1 value for any input — Phase 2 can only add to it via β·y_mem, never change it."
+    },
+    "RtOVfWdjJctBaVSm0xQz-113": {
+      title: "y_mem[L′] — memory readout",
+      body: "TITANS' associative recall at the last extended-history position: y_mem = M_t · q_t. Carries whatever long-range signal fell outside the L=300 attention window."
+    },
+    "RtOVfWdjJctBaVSm0xQz-115": {
+      title: "Late fusion (⊕)",
+      body: "h_final = h_attn[L] + β·y_mem[L′]. β is a single learned scalar, initialized to 0 — it grows only if the memory term actually helps, so short-history users are unaffected (β→0)."
     }
   };
 
