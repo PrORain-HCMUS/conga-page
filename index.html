@@ -355,17 +355,11 @@
         <!-- C1 RoPE -->
         <div class="method-block">
           <h3 class="title is-4">C1 &mdash; <span style="color:#c65a35;">RoPE</span>: Rotary Positional Embeddings</h3>
-          <div class="method-grid" style="grid-template-columns: 1.3fr 1fr;">
-            <div>
-              <img src="static/images/fig_rope.png" alt="RoPE rotation of query/key vectors, from the RoFormer paper" loading="lazy"/>
-              <p class="fig-source">Source: Su et al., RoFormer (2021)</p>
-            </div>
-            <div class="content" style="margin-bottom:0;">
-              <p>Rather than adding a learned absolute position vector, RoPE <b>rotates</b> the query/key vectors by an angle proportional to their position:</p>
-              <div class="method-eq">q<sub>t</sub> = R<sub>θ,t</sub>&middot;W<sub>Q</sub>&middot;e<sub>t</sub> &nbsp;&nbsp; k<sub>t</sub> = R<sub>θ,t</sub>&middot;W<sub>K</sub>&middot;e<sub>t</sub></div>
-              <p>Because R<sub>θ,t</sub> is an orthogonal (norm-preserving) rotation, <b>&Vert;R<sub>θ,t</sub>x&Vert; = &Vert;x&Vert; for any t</b> &mdash; including positions the model never saw during training. The attention score between positions t and s depends only on their <b>relative offset</b> (t&minus;s), eliminating the positional out-of-distribution failure mode entirely. A fused CUDA kernel rotates both q and k in a single memory pass: <b>5.0&times;</b> forward / <b>5.4&times;</b> backward speedup.</p>
-            </div>
-          </div>
+          <p class="content">Rather than adding a learned absolute position vector, RoPE <b>rotates</b> the query/key vectors by an angle proportional to their position (q<sub>t</sub> = R<sub>θ,t</sub>&middot;W<sub>Q</sub>&middot;e<sub>t</sub>, k<sub>t</sub> = R<sub>θ,t</sub>&middot;W<sub>K</sub>&middot;e<sub>t</sub>) &mdash; an orthogonal, norm-preserving rotation, so <b>&Vert;R<sub>θ,t</sub>x&Vert; = &Vert;x&Vert; for any t</b>, including positions never seen during training. The attention score between positions t and s then depends only on their <b>relative offset</b> (t&minus;s), eliminating the positional out-of-distribution failure mode entirely. Custom CUDA kernel: <b>5.0&times;</b> forward / <b>5.4&times;</b> backward.</p>
+          <figure class="method-lead-fig">
+            <img src="static/images/fig_rope.png" alt="RoPE rotation of query/key vectors, from the RoFormer paper" loading="lazy" style="width:100%; height:auto;"/>
+            <figcaption>Source: Su et al., RoFormer (2021)</figcaption>
+          </figure>
         </div>
 
         <!-- C2 KromHC -->
