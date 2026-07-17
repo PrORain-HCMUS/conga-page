@@ -108,6 +108,10 @@
     }
     /* Interactive pipeline diagram */
     .diagram-interactive svg { display: block; max-width: 100%; height: auto; }
+    /* draw.io's export sets color-scheme:"light dark" + CSS light-dark() fills on
+       every shape, so the diagram silently flips to dark colors under a dark-mode
+       OS/browser. This page's design is light-only; force it back. */
+    #conga-diagram-svg { color-scheme: light !important; }
     .diagram-interactive svg .diagram-block { cursor: pointer; transition: filter .15s ease; }
     .diagram-interactive svg .diagram-block:hover,
     .diagram-interactive svg .diagram-block.is-active {

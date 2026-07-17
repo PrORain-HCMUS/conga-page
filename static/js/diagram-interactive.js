@@ -56,7 +56,11 @@
   }
 
   function place(el) {
-    var rect = el.getBoundingClientRect();
+    // The wrapping <g data-cell-id> from draw.io's export has no geometry of
+    // its own; getBoundingClientRect() on it incorrectly returns the whole
+    // SVG's box in some browsers. Measure the actual shape child instead.
+    var shape = el.querySelector("rect, ellipse, path") || el;
+    var rect = shape.getBoundingClientRect();
     var pw = pop.offsetWidth, ph = pop.offsetHeight;
     var top = rect.bottom + 12;
     if (top + ph > window.innerHeight - 8) top = rect.top - ph - 12;
