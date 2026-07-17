@@ -88,6 +88,24 @@
     .table-overall .win-other { background: #eae7dd; font-weight: 600; }
     .table-overall .delta { color: #c65a35; font-weight: 600; }
     .table-overall .delta-neg { color: #c0392b; font-weight: 600; }
+    /* Reference hover popups */
+    .ref-term { border-bottom: 1px dashed rgba(37, 99, 235, .55); cursor: help; transition: background .12s; }
+    .ref-term:hover, .ref-term:focus { background: #e8efff; outline: none; border-bottom-style: solid; }
+    #ref-popup { position: fixed; z-index: 9999; display: none; max-width: 340px;
+      background: #fff; border: 1px solid #e3e1dc; border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .16); padding: .85rem 1rem;
+      font-size: .82rem; line-height: 1.5; text-align: left; }
+    #ref-popup .rp-venue { display: inline-block; background: #eef2ff; color: #2749b8;
+      border-radius: 6px; padding: .08em .55em; font-size: .72rem; font-weight: 600; margin-bottom: .35rem; }
+    #ref-popup .rp-title { font-weight: 700; color: #1a1a17; }
+    #ref-popup .rp-authors { color: #77716a; font-size: .78rem; margin-top: .1rem; }
+    #ref-popup .rp-desc { margin-top: .4rem; color: #3d3a33; }
+    #ref-popup .rp-link { display: inline-block; margin-top: .45rem; font-weight: 600; }
+    /* Mobile: justified text creates uneven word gaps on narrow screens */
+    @media (max-width: 768px) {
+      .has-text-justified { text-align: left !important; }
+      #ref-popup { max-width: min(92vw, 340px); }
+    }
   </style>
 
   <!-- Non-critical CSS - Load asynchronously -->
@@ -113,6 +131,7 @@
   <script defer src="static/js/bulma-carousel.min.js"></script>
   <script defer src="static/js/bulma-slider.min.js"></script>
   <script defer src="static/js/index.js"></script>
+  <script defer src="static/js/refpop.js"></script>
 
   <!-- Structured Data for Academic Papers -->
   <script type="application/ld+json">
