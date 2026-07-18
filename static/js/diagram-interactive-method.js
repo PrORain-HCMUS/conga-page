@@ -80,12 +80,14 @@
       "QapdFMeTDVtv2vCsP-m9-80": { title: "αₜ — forget gate", body: "Controls how much of the previous memory state Mₜ₋₁ is retained vs. decayed at this step." },
       "QapdFMeTDVtv2vCsP-m9-81": { title: "θₜ — learn gate", body: "Controls how strongly the associative error eₜ is written into the memory update." },
       "QapdFMeTDVtv2vCsP-m9-83": { title: "ηₜ — momentum gate", body: "Controls how much of the previous update direction (momentum) carries into the current step's write." },
+      "QapdFMeTDVtv2vCsP-m9-91": { title: "Momentum buffer Sₜ", body: "The momentum term accumulated from past gradient steps, gated by ηₜ, before it's folded into the memory update." },
       "QapdFMeTDVtv2vCsP-m9-115": { title: "Memory state Mₜ", body: "Mₜ ∈ ℝ^(d×d) — the updated memory after this step's forget/learn/momentum-gated write. Feeds back into the next step (recurrence)." },
       "QapdFMeTDVtv2vCsP-m9-118": { title: "Associative recall yₜ", body: "The memory queried with the current qₜ to retrieve whatever long-range signal it holds — independent of how far back that signal originally occurred." },
       "QapdFMeTDVtv2vCsP-m9-117": { title: "Final representation", body: "The representation after combining the memory's recall with the encoder's own output — what actually reaches the prediction head." },
       "QapdFMeTDVtv2vCsP-m9-119": { title: "Late-fusion mixing", body: "A single learned scalar weight blends the memory's recall into the final representation — see the detailed Late Fusion panel on the right." },
       "vhPURF8fL8qqjuJQI4DR-4": { title: "yₜ", body: "The memory's associative-recall readout at the current step, about to be fused with the frozen encoder's output." },
       "vhPURF8fL8qqjuJQI4DR-1": { title: "Late Fusion", body: "h_final = h_attn[L] + β·y_mem[L′]. The base encoder (❄️ frozen in Phase 2) contributes h_attn[L] unchanged; the memory contributes β·y_mem[L′] on top — β is a single learned scalar initialized to 0, so short-history users are unaffected until the memory term is shown to help." },
+      "vhPURF8fL8qqjuJQI4DR-5": { title: "Frozen base encoder", body: "h_attn[L] — the Phase-1 encoder's output, ❄️ frozen in Phase 2 so it stays provably identical to its Phase-1 value. The memory can only add to it, never change it." },
       "vhPURF8fL8qqjuJQI4DR-11": { title: "y_mem[L′]", body: "The memory's readout at the extended history position L′ — carries whatever long-range signal fell outside the encoder's attention window." },
       "vhPURF8fL8qqjuJQI4DR-18": { title: "h_final", body: "The fused representation actually used for next-item scoring: frozen encoder output plus the memory's β-weighted contribution." }
     }
